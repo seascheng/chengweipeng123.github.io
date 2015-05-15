@@ -39,7 +39,7 @@
   </script>
 
 
-  <title> Autolayout 按比例布局 // SeasCheng's Notes </title>
+  <title> Autolayout 控件等距 // SeasCheng's Notes </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Autolayout 按比例布局
+              Autolayout 控件等距
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-04-30
+          发表于 2015-05-04
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/04/30/Autolayout-radio/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/30/Autolayout-radio/"></span>
+            <a href="/2015/05/04/Autolayout-spacer/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/04/Autolayout-spacer/"></span>
             </a>
           </span>
           
@@ -161,67 +161,28 @@
       
 
       
-        <h1 id="AutoLayout_按比例布局">AutoLayout 按比例布局</h1><p><em>AutoLayout 一般设置使用的是绝对值：view width和height的固定值，subview与父view或相邻view的距离固定值。</em></p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_1.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<p>下面介绍下按比例使用AutoLayout布局界面。</p>
-<p><strong>想要实现这样一个布局：</strong></p>
+        <h3 id="目的：">目的：</h3><p><strong>现在想要实现这样一个视图：</strong></p>
 <ol>
-<li><em>新建subview，其高和宽都为屏幕view大小的1/3.</em></li>
-<li><em>subview的上距和左距都为view的1/4.</em></li>
+<li><em>view上三个按钮，三者之间等间距摆放。</em></li>
+<li><em>view宽度变化，三个按钮之间的长度和间距保持比例不变。</em></li>
 </ol>
-<p>实现按比例布局界面的关系式为：</p>
-<p><code>FirstItem.Attribute1 = (SecondItem.Attribute2 * Multiplier) + Constant</code><br><a id="more"></a></p>
-<h5 id="1-_在view中，新建一个宽高都为100的subview。并居中设置。"><strong>1. 在view中，新建一个宽高都为100的subview。并居中设置。</strong></h5><p>设定宽高：</p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_2.png?imageView2/2/h/400" style="display:inline"><br></div>
+<p>这里需要用到辅助view实现这个功能。</p>
+<a id="more"></a>
+<h4 id="1-_向view中拖入三个按钮，并设置三者高宽：_宽度为：76"><strong>1. 向view中拖入三个按钮，并设置三者高宽：  宽度为：76</strong></h4><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_1.png?imageView2/2/h/400" style="display:inline"><br></div>
 
-<p>设定对齐方式：</p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_3.png?imageView2/2/h/400" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_4.png?imageView2/2/h/400" style="display:inline"><br></div>
+<h4 id="2-_在当前view中，设置三个按钮，等间距-"><strong>2. 在当前view中，设置三个按钮，等间距.</strong></h4><p><code>super.view.width＝320</code>，三个按钮<code>width＝76</code>，所以第一个按钮的x起点为<code>320－76*3）/4=23</code>，第二个按钮<code>x：23+76+23=122</code>，第三个按钮x：<code>122+76+23=221</code>。</p>
+<h4 id="3-_建立Constraints:"><strong>3. 建立Constraints:</strong></h4><p>Spacer按钮XY居中，MyButton与Spacer同Center Y</p>
+<h4 id="4-_拖入四个辅助view（width:23,height:30），填充三个按钮之间的空间："><strong>4. 拖入四个辅助view（<code>width:23,height:30</code>），填充三个按钮之间的空间：</strong></h4><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_2.png?imageView2/2/h/400" style="display:inline"><br></div>
 
-<h5 id="2-_从属性栏中可以看到设置的Constraints-"><strong>2. 从属性栏中可以看到设置的Constraints.</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_5.png?imageView2/2/h/400" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_6.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="3-_点击Align_Center_X_to:Subperview,进入编辑页面。"><strong>3. 点击Align Center X to:Subperview,进入编辑页面。</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_7.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<p>从窗口中，可以看到布局关系式对应的几个参数。当前subview和suoerview都是居中对齐的，所以Constant值为0，也就说<code>Superview.Center.X=subView.Center.X</code><br>因为我们要设置的是subview的布局，所以为了方便期间，把first item设置为subview，使用<code>Reverse First And Second Item</code>按钮，交换subview与superview的位置。</p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_8.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<p>  点击first item和second item的下拉框，可以看到x轴上相关的其他值。</p>
-<h5 id="4-_下面设置subview距view左边距1/4-介绍下两种关系式。"><strong>4. 下面设置subview距view左边距1/4.介绍下两种关系式。</strong></h5><ul>
-<li><p>subview的左边缘位于superview右边缘的1/4处。即关系式为：</p>
-<p><code>subView.Leading=superView.Trailing*1/4+0</code></p>
+<h4 id="5-_开始设置Constraints-"><strong>5. 开始设置Constraints.</strong></h4><ul>
+<li><p>四个view 同宽高</p>
+<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_3.png?imageView2/2/h/400" style="display:inline"><br></div>
 </li>
-<li><p>有时候按照边缘来设置并不好用，可以使用两者的中间线设置。比如subview的中间线位于superview中间线的1/2。即关系式为：</p>
-<p><code>subView.Center X=superView.Center X*1/2+0</code></p>
+<li><p>四个view与Spacer同Center Y.</p>
 </li>
+<li>依次设置Superview左边缘与第一个view，第一个view与My,My与第二个view……第四个view与Superview右边缘的距离。<br><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_4.png?imageView2/2/h/400" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_5.png?imageView2/2/h/400" style="display:inline"><br></div><h4 id="6-_最终效果如下："><strong>6. 最终效果如下：</strong></h4></li>
 </ul>
-<p>（当然这两个关系式的结果并不是一样的。）</p>
-<h5 id="5-_这里使用第一个方式，设置为"><strong>5. 这里使用第一个方式，设置为</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_9.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="6-_同理，设置下Y线的，值"><strong>6. 同理，设置下Y线的，值</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_10.png?imageView2/2/h/400" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_11.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="7-_接下来设置subview宽高和superview的比例关系。"><strong>7. 接下来设置subview宽高和superview的比例关系</strong>。</h5><p>先把subview设置为superview等宽高</p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_12.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="8-_点击新增的Constraints，进入编辑界面："><strong>8. 点击新增的Constraints，进入编辑界面：</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_13.png?imageView2/2/h/400" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_14.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="9-_改变比例关系。关系式为："><strong>9. 改变比例关系。关系式为：</strong></h5><p><code>subView.Width=superView.Width*0.33+0</code></p>
-<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_15.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="10-_同样修改Height的比例关系"><strong>10. 同样修改Height的比例关系</strong></h5><p><code>subView.Height=superView.Height*0.33+0</code></p>
-<h5 id="11-_最后删除之前设置subview的宽高固定值。并update_frame。"><strong>11. 最后删除之前设置subview的宽高固定值。并update frame。</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_16.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-<h5 id="12-_最终的效果图为："><strong>12. 最终的效果图为：</strong></h5><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(radio)_17.png?imageView2/2/h/400" style="display:inline"><br></div>
-
-
-
-
-
-
-
-
-
-
-
+<p><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(specer)_6.png?imageView2/2/h/400" style="display:inline"><br></p>
 
       
     </div>
@@ -241,11 +202,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/04/30/The-first-post/">The first post</a>
+              <a href="/2015/05/04/Autolayout-resizing/">Autolayout-resizing</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/30/hello-world/">Hello World</a>
             
           </div>
         </div>
@@ -261,8 +224,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/04/30/Autolayout-radio/"
-               data-title="Autolayout 按比例布局" data-url="http://chengweipeng123.github.io/2015/04/30/Autolayout-radio/">
+          <div class="ds-thread" data-thread-key="2015/05/04/Autolayout-spacer/"
+               data-title="Autolayout 控件等距" data-url="http://chengweipeng123.github.io/2015/05/04/Autolayout-spacer/">
           </div>
         
       </div>
@@ -344,7 +307,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayout_按比例布局"><span class="nav-number">1.</span> <span class="nav-text">AutoLayout 按比例布局</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_在view中，新建一个宽高都为100的subview。并居中设置。"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">1. 在view中，新建一个宽高都为100的subview。并居中设置。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_从属性栏中可以看到设置的Constraints-"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">2. 从属性栏中可以看到设置的Constraints.</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_点击Align_Center_X_to:Subperview,进入编辑页面。"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">3. 点击Align Center X to:Subperview,进入编辑页面。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_下面设置subview距view左边距1/4-介绍下两种关系式。"><span class="nav-number">1.0.0.0.4.</span> <span class="nav-text">4. 下面设置subview距view左边距1/4.介绍下两种关系式。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_这里使用第一个方式，设置为"><span class="nav-number">1.0.0.0.5.</span> <span class="nav-text">5. 这里使用第一个方式，设置为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_同理，设置下Y线的，值"><span class="nav-number">1.0.0.0.6.</span> <span class="nav-text">6. 同理，设置下Y线的，值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_接下来设置subview宽高和superview的比例关系。"><span class="nav-number">1.0.0.0.7.</span> <span class="nav-text">7. 接下来设置subview宽高和superview的比例关系。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_点击新增的Constraints，进入编辑界面："><span class="nav-number">1.0.0.0.8.</span> <span class="nav-text">8. 点击新增的Constraints，进入编辑界面：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_改变比例关系。关系式为："><span class="nav-number">1.0.0.0.9.</span> <span class="nav-text">9. 改变比例关系。关系式为：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-_同样修改Height的比例关系"><span class="nav-number">1.0.0.0.10.</span> <span class="nav-text">10. 同样修改Height的比例关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-_最后删除之前设置subview的宽高固定值。并update_frame。"><span class="nav-number">1.0.0.0.11.</span> <span class="nav-text">11. 最后删除之前设置subview的宽高固定值。并update frame。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-_最终的效果图为："><span class="nav-number">1.0.0.0.12.</span> <span class="nav-text">12. 最终的效果图为：</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目的："><span class="nav-number">1.</span> <span class="nav-text">目的：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-_向view中拖入三个按钮，并设置三者高宽：_宽度为：76"><span class="nav-number">1.1.</span> <span class="nav-text">1. 向view中拖入三个按钮，并设置三者高宽：  宽度为：76</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-_在当前view中，设置三个按钮，等间距-"><span class="nav-number">1.2.</span> <span class="nav-text">2. 在当前view中，设置三个按钮，等间距.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-_建立Constraints:"><span class="nav-number">1.3.</span> <span class="nav-text">3. 建立Constraints:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-_拖入四个辅助view（width:23,height:30），填充三个按钮之间的空间："><span class="nav-number">1.4.</span> <span class="nav-text">4. 拖入四个辅助view（width:23,height:30），填充三个按钮之间的空间：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-_开始设置Constraints-"><span class="nav-number">1.5.</span> <span class="nav-text">5. 开始设置Constraints.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-_最终效果如下："><span class="nav-number">1.6.</span> <span class="nav-text">6. 最终效果如下：</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
