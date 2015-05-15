@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="Seas,小庙" />
+  <meta name="keywords" content="autolayout,ios," />
 
 
 
@@ -39,7 +39,7 @@
   </script>
 
 
-  <title> Autolayout-resizing // SeasCheng's Notes </title>
+  <title> Autolayout-Resizing // SeasCheng's Notes </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Autolayout-resizing
+              Autolayout-Resizing
             
           
         </h1>
@@ -129,6 +129,17 @@
           发表于 2015-05-04
         </span>
 
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/ios/">ios</a>
+
+              
+              
+
+            
+          </span>
         
 
         
@@ -150,11 +161,29 @@
       
 
       
-        
+        <h3 id="目的：">目的：</h3><p><strong>现在想要实现这样一个视图：</strong></p>
+<ol>
+<li><em>登录界面。点击登录按钮，弹出键盘，为避免键盘遮挡输入框，view上移。</em></li>
+<li><em>点击页面其他部分，键盘消失，view恢复</em></li>
+</ol>
+<p>这里，需要代码对constraint控制。<br><a id="more"></a></p>
+<h4 id="1-_新建登录页"><strong>1. 新建登录页</strong></h4><p>建立一个登录view，页面和结构如下：</p>
+<div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(resizing)_1.png" style="display:inline"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(resizing)_2.png" style="display:inline"><br></div><br>####<strong>2. 将Constraints拖入.h文件，当作一个属性</strong><br><br>要完成目的，主要是改变view的位置。<br>view的位置是根据其与superview的四方边缘确定的。要在键盘弹出时，就要将view的上边缘向上提（而不能将下边缘向上提，否则只会横截view，而不会产生向上提的效果）。因此我们把上边距constraint当做属性，代码控制。<br><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(resizing)_3.png" style="display:inline"><br></div>
+
+<h4 id="3-_代码如下"><strong>3. 代码如下</strong></h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  ViewController.h</span></span><br><span class="line"><span class="comment">//  autolayout</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by centling on 15/4/27.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015年 Seas.CHENG. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">@class</span> <span class="title">MiniObject</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> : <span class="title">UIViewController</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIView</span> *contentView;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">NSLayoutConstraint</span> *subviewTopSpaceContainer;</span><br><span class="line">- (<span class="keyword">IBAction</span>)click:(<span class="keyword">id</span>)sender;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIButton</span> *button;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  ViewController.m</span></span><br><span class="line"><span class="comment">//  autolayout</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by centling on 15/4/27.</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2015年 Seas.CHENG. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="title">"ViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"MiniObject.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"EmptyClass.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/objc-class.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span>  selector:<span class="keyword">@selector</span>(keyboardWillShow:) name:<span class="built_in">UIKeyboardWillShowNotification</span> object:<span class="literal">nil</span>];</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></span><br><span class="line">                                             selector:<span class="keyword">@selector</span>(keyboardHide:)</span><br><span class="line">                                                 name:<span class="built_in">UIKeyboardWillHideNotification</span></span><br><span class="line">                                               object:<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">UITapGestureRecognizer</span> *tapGesture=[[<span class="built_in">UITapGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(hiddenKeyboard:)];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> addGestureRecognizer:tapGesture];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)doSomething&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)hiddenKeyboard:(<span class="keyword">id</span>)sender&#123;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> endEditing:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)dealloc&#123;</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)keyboardHide:(<span class="built_in">NSNotification</span> *)notification&#123;</span><br><span class="line">    <span class="built_in">NSTimeInterval</span> duration=[notification<span class="variable">.userInfo</span>[<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] doubleValue];</span><br><span class="line">    <span class="built_in">UIViewAnimationCurve</span> curve=[notification<span class="variable">.userInfo</span>[<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] integerValue];</span><br><span class="line">    </span><br><span class="line">    [<span class="built_in">UIView</span> beginAnimations:<span class="literal">nil</span> context:<span class="literal">nil</span>];</span><br><span class="line">    [<span class="built_in">UIView</span> setAnimationCurve:curve];</span><br><span class="line">    [<span class="built_in">UIView</span> setAnimationDuration:duration];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.subviewTopSpaceContainer</span><span class="variable">.constant</span>=<span class="number">0</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> layoutIfNeeded];</span><br><span class="line">    [<span class="built_in">UIView</span> commitAnimations];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)keyboardWillShow:(<span class="built_in">NSNotification</span> *)notification&#123;</span><br><span class="line">    <span class="built_in">NSTimeInterval</span> duration=[notification<span class="variable">.userInfo</span>[<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] doubleValue];</span><br><span class="line">    <span class="built_in">UIViewAnimationCurve</span> curve=[notification<span class="variable">.userInfo</span>[<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] integerValue];</span><br><span class="line">    <span class="built_in">CGRect</span> keyboardEndFrame=[notification<span class="variable">.userInfo</span>[<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] <span class="built_in">CGRectValue</span>];</span><br><span class="line">    </span><br><span class="line">    [<span class="built_in">UIView</span> beginAnimations:<span class="literal">nil</span> context:<span class="literal">nil</span>];</span><br><span class="line">    [<span class="built_in">UIView</span> setAnimationCurve:curve];</span><br><span class="line">    [<span class="built_in">UIView</span> setAnimationDuration:duration];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.subviewTopSpaceContainer</span><span class="variable">.constant</span>=-(keyboardEndFrame<span class="variable">.size</span><span class="variable">.height</span>-(<span class="keyword">self</span><span class="variable">.view</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.height</span>-(<span class="keyword">self</span><span class="variable">.button</span><span class="variable">.frame</span><span class="variable">.origin</span><span class="variable">.y</span>+<span class="keyword">self</span><span class="variable">.button</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.height</span>)));</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.view</span> layoutIfNeeded];</span><br><span class="line">    [<span class="built_in">UIView</span> commitAnimations];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-_最终效果"><strong>4. 最终效果</strong></h4><div style="text-align: center"><br><img src="http://7xitzh.com1.z0.glb.clouddn.com/autolayout(resizing)_4.png" style="display:inline"><br></div>
       
     </div>
 
     <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/autolayout/"> #autolayout </a>
+          
+            <a href="/tags/ios/"> #ios </a>
+          
+        </div>
       
 
       
@@ -184,7 +213,7 @@
       <div class="comments" id="comments">
         
           <div class="ds-thread" data-thread-key="2015/05/04/Autolayout-resizing/"
-               data-title="Autolayout-resizing" data-url="http://chengweipeng123.github.io/2015/05/04/Autolayout-resizing/">
+               data-title="Autolayout-Resizing" data-url="http://chengweipeng123.github.io/2015/05/04/Autolayout-resizing/">
           </div>
         
       </div>
@@ -266,7 +295,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目的："><span class="nav-number">1.</span> <span class="nav-text">目的：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-_新建登录页"><span class="nav-number">1.1.</span> <span class="nav-text">1. 新建登录页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-_代码如下"><span class="nav-number">1.2.</span> <span class="nav-text">3. 代码如下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-_最终效果"><span class="nav-number">1.3.</span> <span class="nav-text">4. 最终效果</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
